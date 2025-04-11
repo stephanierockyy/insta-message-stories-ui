@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Camera } from 'lucide-react';
+import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Camera, Phone } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StoryCircle from '@/components/StoryCircle';
 import MessageItem from '@/components/MessageItem';
