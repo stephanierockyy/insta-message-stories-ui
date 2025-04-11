@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Mic, Send, Smile, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import EmojiPicker from './EmojiPicker';
@@ -17,6 +17,13 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const emojiButtonRef = useRef<HTMLButtonElement>(null);
   const isMobile = useIsMobile();
+
+  // Focus the textarea when component mounts or emoji picker closes
+  useEffect(() => {
+    if (!isEmojiPickerOpen && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isEmojiPickerOpen]);
 
   const handleSend = () => {
     if (message.trim()) {
@@ -59,6 +66,13 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     }
   };
 
+  // Handler for when textarea receives focus
+  const handleTextareaFocus = () => {
+    if (isMobile && isEmojiPickerOpen) {
+      setIsEmojiPickerOpen(false);
+    }
+  };
+
   return (
     <>
       <div className={cn(
@@ -81,6 +95,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             value={message}
             onChange={handleTextareaChange}
             onKeyPress={handleKeyPress}
+            onFocus={handleTextareaFocus}
             className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-24 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
             style={{ 
               height: Math.min(60, Math.max(24, message.split('\n').length * 20)) + 'px'
