@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Paperclip, Mic, Send, Smile } from 'lucide-react';
+import { Camera, Mic, Send, Smile } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MessageComposerProps {
@@ -28,9 +28,9 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     <div className="bg-white border-t border-gray-200 p-2 flex items-center">
       <button 
         className="p-2 rounded-full hover:bg-gray-100 text-purple-500"
-        aria-label="Attachment"
+        aria-label="Camera"
       >
-        <Paperclip size={20} />
+        <Camera size={20} />
       </button>
       <div className={cn(
         "flex-1 border border-gray-300 rounded-full mx-2",
