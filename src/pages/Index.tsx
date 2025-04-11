@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Camera, Edit, Plus, Video } from 'lucide-react';
+import { Edit, Plus, Video } from 'lucide-react';
 import StoryCircle from '@/components/StoryCircle';
 import MessageItem from '@/components/MessageItem';
 import MessageComposer from '@/components/MessageComposer';
@@ -121,7 +120,7 @@ const Index = () => {
     const newMessage = {
       id: `${messages.length + 1}`,
       text,
-      sender: 'user' as 'user' | 'other',
+      sender: 'user' as const,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       isRead: false
     };
@@ -148,7 +147,11 @@ const Index = () => {
             <h1 className="text-xl font-semibold flex-1">Messages</h1>
             <div className="flex items-center space-x-4">
               <button className="text-purple-500">
-                <Camera size={22} />
+                <img 
+                  src="/lovable-uploads/49ce606e-ce96-4fdb-86be-64a1b01bc088.png" 
+                  alt="Camera" 
+                  className="w-6 h-6"
+                />
               </button>
               <button className="text-purple-500">
                 <Edit size={22} />
