@@ -4,9 +4,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { Paperclip, Smile, Mic, Search, Phone, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { useIsMobile } from '@/hooks/use-mobile';
+
+interface ChatNavBarProps {
+  title: string;
+  subtitle?: string;
+  avatarSrc?: string;
+  onBack?: () => void;
+}
 
 const BottomNavigation: React.FC = () => {
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   // For messages view navigation
   const MessagesNavBar = () => (
@@ -30,20 +39,26 @@ const BottomNavigation: React.FC = () => {
     </div>
   );
 
-  // For chat view navigation - Updated to match the WhatsApp-style design
-  const ChatNavBar = () => (
-    <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-16 shadow-sm z-10">
+  // Chat navigation bar component - can be used in both mobile and desktop
+  const ChatNavBar: React.FC<ChatNavBarProps> = ({ title, subtitle, avatarSrc, onBack }) => (
+    <div className={cn(
+      "bg-white border-b border-gray-200 h-16 shadow-sm z-10",
+      isMobile ? "fixed top-0 left-0 right-0" : ""
+    )}>
       <div className="h-full flex items-center px-4 justify-between">
         <div className="flex items-center">
-          <Link to="/" className="p-2 mr-2" aria-label="Back">
-            <ArrowLeft size={24} className="text-gray-800" />
-          </Link>
+          {onBack && (
+            <button onClick={onBack} className="p-2 mr-2" aria-label="Back">
+              <ArrowLeft size={24} className="text-gray-800" />
+            </button>
+          )}
           <Avatar className="h-10 w-10 bg-purple-400">
-            <AvatarFallback className="text-white font-semibold">H</AvatarFallback>
+            <AvatarImage src={avatarSrc} alt={title} />
+            <AvatarFallback className="text-white font-semibold">{title?.[0]}</AvatarFallback>
           </Avatar>
           <div className="ml-3">
-            <div className="text-base font-medium">hey</div>
-            <div className="text-xs text-gray-500">1 member</div>
+            <div className="text-base font-medium">{title}</div>
+            <div className="text-xs text-gray-500">{subtitle || '1 member'}</div>
           </div>
         </div>
         <div className="flex space-x-6">
@@ -58,9 +73,45 @@ const BottomNavigation: React.FC = () => {
     </div>
   );
 
-  // This code is no longer in use after removing the footer navbar,
-  // but we're keeping the file for reference
+  // This component now exports reusable navigation components that can be used in mobile and desktop layouts
   return null;
+};
+
+// Export the ChatNavBar as a named export so we can use it in other components
+export const ChatNavBar: React.FC<ChatNavBarProps> = ({ title, subtitle, avatarSrc, onBack }) => {
+  const isMobile = useIsMobile();
+  return (
+    <div className={cn(
+      "bg-white border-b border-gray-200 h-16 shadow-sm z-10",
+      isMobile ? "fixed top-0 left-0 right-0" : ""
+    )}>
+      <div className="h-full flex items-center px-4 justify-between">
+        <div className="flex items-center">
+          {onBack && (
+            <button onClick={onBack} className="p-2 mr-2" aria-label="Back">
+              <ArrowLeft size={24} className="text-gray-800" />
+            </button>
+          )}
+          <Avatar className="h-10 w-10 bg-purple-400">
+            <AvatarImage src={avatarSrc} alt={title} />
+            <AvatarFallback className="text-white font-semibold">{title?.[0]}</AvatarFallback>
+          </Avatar>
+          <div className="ml-3">
+            <div className="text-base font-medium">{title}</div>
+            <div className="text-xs text-gray-500">{subtitle || '1 member'}</div>
+          </div>
+        </div>
+        <div className="flex space-x-6">
+          <button className="p-1.5" aria-label="Search">
+            <Search size={24} className="text-gray-800" />
+          </button>
+          <button className="p-1.5" aria-label="Call">
+            <Phone size={24} className="text-gray-800" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default BottomNavigation;

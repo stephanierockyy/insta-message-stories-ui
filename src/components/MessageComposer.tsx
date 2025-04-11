@@ -4,6 +4,7 @@ import { Camera, Mic, Send, Smile, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import EmojiPicker from './EmojiPicker';
 import { Textarea } from './ui/textarea';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MessageComposerProps {
   onSendMessage: (message: string) => void;
@@ -13,6 +14,8 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const emojiButtonRef = useRef<HTMLButtonElement>(null);
+  const isMobile = useIsMobile();
 
   const handleSend = () => {
     if (message.trim()) {
@@ -33,6 +36,10 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
+    // On desktop, close the emoji picker after selection
+    if (!isMobile) {
+      setIsEmojiPickerOpen(false);
+    }
   };
 
   const toggleEmojiPicker = () => {
@@ -47,7 +54,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     <>
       <div className={cn(
         "bg-white border-t border-gray-200 p-2 flex items-center",
-        isEmojiPickerOpen ? "border-b-0" : ""
+        isEmojiPickerOpen && isMobile ? "border-b-0" : ""
       )}>
         <button 
           className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
@@ -71,6 +78,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             }}
           />
           <button 
+            ref={emojiButtonRef}
             className={cn(
               "p-1 rounded-full hover:bg-gray-200 ml-1",
               isEmojiPickerOpen ? "bg-gray-200" : ""
@@ -99,11 +107,23 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         )}
       </div>
       
-      <EmojiPicker 
-        isOpen={isEmojiPickerOpen} 
-        onEmojiSelect={handleEmojiSelect}
-        onClose={() => setIsEmojiPickerOpen(false)}
-      />
+      {isMobile ? (
+        <EmojiPicker 
+          isOpen={isEmojiPickerOpen} 
+          onEmojiSelect={handleEmojiSelect}
+          onClose={() => setIsEmojiPickerOpen(false)}
+          triggerRef={emojiButtonRef}
+        />
+      ) : (
+        isEmojiPickerOpen && (
+          <EmojiPicker 
+            isOpen={isEmojiPickerOpen} 
+            onEmojiSelect={handleEmojiSelect}
+            onClose={() => setIsEmojiPickerOpen(false)}
+            triggerRef={emojiButtonRef}
+          />
+        )
+      )}
     </>
   );
 };
