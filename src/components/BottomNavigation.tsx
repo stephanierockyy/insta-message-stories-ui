@@ -1,4 +1,5 @@
 
+// This file is kept but no longer in use after removing the footer navbar
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Search, PlusSquare, Heart, User } from 'lucide-react';
