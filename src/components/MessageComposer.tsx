@@ -51,6 +51,14 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     }
   };
 
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+    // Close emoji picker on typing for mobile
+    if (isMobile && isEmojiPickerOpen) {
+      setIsEmojiPickerOpen(false);
+    }
+  };
+
   return (
     <>
       <div className={cn(
@@ -71,7 +79,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             ref={textareaRef}
             placeholder="Message"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={handleTextareaChange}
             onKeyPress={handleKeyPress}
             className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-24 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
             style={{ 
