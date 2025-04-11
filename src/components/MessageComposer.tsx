@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Mic, Send, Smile, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import EmojiPicker from './EmojiPicker';
+import EmojiPicker, { EmojiPickerContent } from './EmojiPicker';
 import { Textarea } from './ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
