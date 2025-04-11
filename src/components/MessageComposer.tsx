@@ -1,8 +1,9 @@
 
 import React, { useState, useRef } from 'react';
-import { Camera, Mic, Send, Smile } from 'lucide-react';
+import { Camera, Mic, Send, Smile, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import EmojiPicker from './EmojiPicker';
+import { Textarea } from './ui/textarea';
 
 interface MessageComposerProps {
   onSendMessage: (message: string) => void;
@@ -11,7 +12,7 @@ interface MessageComposerProps {
 const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     if (message.trim()) {
@@ -29,16 +30,16 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
 
   const handleEmojiSelect = (emoji: string) => {
     setMessage(prev => prev + emoji);
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (textareaRef.current) {
+      textareaRef.current.focus();
     }
   };
 
   const toggleEmojiPicker = () => {
     setIsEmojiPickerOpen(prev => !prev);
-    // Focus the input when emoji picker is closed
-    if (isEmojiPickerOpen && inputRef.current) {
-      inputRef.current.focus();
+    // Focus the textarea when emoji picker is closed
+    if (isEmojiPickerOpen && textareaRef.current) {
+      textareaRef.current.focus();
     }
   };
 
@@ -49,23 +50,25 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         isEmojiPickerOpen ? "border-b-0" : ""
       )}>
         <button 
-          className="p-2 rounded-full hover:bg-gray-100 text-purple-500"
-          aria-label="Camera"
+          className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
+          aria-label="Attachment"
         >
-          <Camera size={20} />
+          <Paperclip size={24} />
         </button>
         <div className={cn(
-          "flex-1 border border-gray-300 rounded-full mx-2",
-          "bg-gray-100 flex items-center px-3 py-1"
+          "flex-1 bg-gray-100 rounded-full mx-2",
+          "flex items-center px-3 py-1"
         )}>
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Message..."
+          <Textarea
+            ref={textareaRef}
+            placeholder="Message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex-1 bg-transparent outline-none text-sm py-1"
+            className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-24 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
+            style={{ 
+              height: Math.min(60, Math.max(24, message.split('\n').length * 20)) + 'px'
+            }}
           />
           <button 
             className={cn(
@@ -75,25 +78,25 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             aria-label="Emoji"
             onClick={toggleEmojiPicker}
           >
-            <Smile size={20} className="text-gray-500" />
+            <Smile size={24} className="text-gray-500" />
           </button>
-          {!message.trim() ? (
-            <button 
-              className="p-1 rounded-full hover:bg-gray-200 ml-1"
-              aria-label="Voice message"
-            >
-              <Mic size={20} className="text-gray-500" />
-            </button>
-          ) : (
-            <button 
-              className="p-1 rounded-full hover:bg-gray-200 ml-1 text-purple-500"
-              onClick={handleSend}
-              aria-label="Send message"
-            >
-              <Send size={20} />
-            </button>
-          )}
         </div>
+        {!message.trim() ? (
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100"
+            aria-label="Voice message"
+          >
+            <Mic size={24} className="text-gray-500" />
+          </button>
+        ) : (
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100 bg-gray-100 text-purple-500"
+            onClick={handleSend}
+            aria-label="Send message"
+          >
+            <Send size={24} />
+          </button>
+        )}
       </div>
       
       <EmojiPicker 
