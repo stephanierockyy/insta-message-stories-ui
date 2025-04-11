@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Video, Paperclip, Mic, Smile, Phone, Search } from 'lucide-react';
@@ -79,33 +80,33 @@ const CONVERSATION_MESSAGES = [
   {
     id: '1',
     text: 'Hey, how are you doing?',
-    sender: 'other',
+    sender: 'other' as const,
     time: '10:30 AM'
   },
   {
     id: '2',
     text: 'I\'m good, thanks! Just saw your story. That food looks amazing!',
-    sender: 'user',
+    sender: 'user' as const,
     time: '10:32 AM',
     isRead: true
   },
   {
     id: '3',
     text: 'Yeah, the restaurant was incredible. We should go there sometime!',
-    sender: 'other',
+    sender: 'other' as const,
     time: '10:33 AM'
   },
   {
     id: '4',
     text: 'Definitely! Are you free this weekend?',
-    sender: 'user',
+    sender: 'user' as const,
     time: '10:35 AM',
     isRead: true
   },
   {
     id: '5',
     text: 'Saturday works for me. Should we invite the others too?',
-    sender: 'other',
+    sender: 'other' as const,
     time: '10:36 AM'
   }
 ];
