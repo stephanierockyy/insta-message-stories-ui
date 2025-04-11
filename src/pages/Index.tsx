@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Plus, Video, Paperclip, Mic, Smile, Phone, Search, ArrowLeft } from 'lucide-react';
+import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Camera } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StoryCircle from '@/components/StoryCircle';
 import MessageItem from '@/components/MessageItem';
@@ -9,7 +9,6 @@ import BottomNavigation from '@/components/BottomNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
-// Sample data
 const SAMPLE_STORIES = [
   {
     id: '1',
@@ -146,13 +145,10 @@ const Index = () => {
     setActiveChat(null);
   };
 
-  // Desktop layout
   if (!isMobile) {
     return (
       <div className="h-screen flex bg-gray-100">
-        {/* Left sidebar - conversations list */}
         <div className="w-1/3 border-r border-gray-200 bg-white flex flex-col h-full overflow-hidden">
-          {/* Header */}
           <header className="bg-white border-b border-gray-200 p-4 flex items-center">
             <h1 className="text-xl font-semibold flex-1">Messages</h1>
             <div className="flex items-center space-x-4">
@@ -162,7 +158,6 @@ const Index = () => {
             </div>
           </header>
 
-          {/* Messages list */}
           <div className="flex-1 overflow-y-auto">
             {SAMPLE_MESSAGES.map((chat) => (
               <button
@@ -179,7 +174,6 @@ const Index = () => {
                     alt={chat.name}
                     className="w-12 h-12 rounded-full object-cover" 
                   />
-                  {/* Online indicator */}
                   <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
                 </div>
                 <div className="ml-3 flex-1">
@@ -207,11 +201,9 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Right side - chat area */}
         <div className="w-2/3 flex flex-col h-full bg-white">
           {activeChat ? (
             <>
-              {/* Chat header */}
               <header className="bg-white border-b border-gray-200 h-16 flex items-center px-4 shadow-sm">
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center">
@@ -242,7 +234,6 @@ const Index = () => {
                 </div>
               </header>
 
-              {/* Chat messages */}
               <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
                 {messages.map((message) => (
                   <MessageItem
@@ -256,7 +247,6 @@ const Index = () => {
                 ))}
               </div>
 
-              {/* Message composer */}
               <MessageComposer onSendMessage={handleSendMessage} />
             </>
           ) : (
@@ -275,24 +265,22 @@ const Index = () => {
     );
   }
 
-  // Mobile layout - existing code
   return (
     <div className="mobile-container bg-white flex flex-col">
-      {/* Header */}
       {activeTab === 'messages' ? (
-        <header className="bg-white border-b border-gray-200 p-4 flex items-center">
+        <header className="bg-white p-4 flex items-center">
           <h1 className="text-xl font-semibold flex-1">Messages</h1>
           <div className="flex items-center space-x-4">
             <button className="text-purple-500">
-              <Paperclip size={22} />
+              <Camera size={22} />
             </button>
-            <button className="text-purple-500">
-              <Edit size={22} />
+            <button className="text-black">
+              <Search size={22} />
             </button>
           </div>
         </header>
       ) : (
-        <header className="bg-white border-b border-gray-200 h-16 flex items-center px-4 shadow-sm">
+        <header className="bg-white h-16 flex items-center px-4 shadow-sm">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center">
               <button 
@@ -330,7 +318,6 @@ const Index = () => {
       
       {activeTab === 'messages' ? (
         <React.Fragment>
-          {/* Stories row */}
           <div className="py-3 px-1 border-b border-gray-100">
             <div className="flex space-x-4 overflow-x-auto hide-scrollbar pl-4 pr-4">
               {SAMPLE_STORIES.map((story, index) => (
@@ -363,7 +350,6 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Messages list */}
           <div className="flex-1 overflow-y-auto">
             {SAMPLE_MESSAGES.map((chat) => (
               <button
@@ -377,7 +363,6 @@ const Index = () => {
                     alt={chat.name}
                     className="w-12 h-12 rounded-full object-cover" 
                   />
-                  {/* Online indicator */}
                   <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white" />
                 </div>
                 <div className="ml-3 flex-1">
@@ -396,7 +381,6 @@ const Index = () => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {/* Chat view - adjusted with padding-top to account for fixed header */}
           <div className="flex-1 overflow-y-auto p-4 pt-16">
             {messages.map((message) => (
               <MessageItem
@@ -410,12 +394,10 @@ const Index = () => {
             ))}
           </div>
           
-          {/* Message composer */}
           <MessageComposer onSendMessage={handleSendMessage} />
         </React.Fragment>
       )}
       
-      {/* Bottom navigation - no longer used but kept for reference */}
       <div className="h-14">
         <BottomNavigation />
       </div>
