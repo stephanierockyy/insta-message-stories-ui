@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Video, Paperclip, Mic, Smile, Phone, Search, ArrowLeft } from 'lucide-react';
@@ -8,6 +7,7 @@ import MessageItem from '@/components/MessageItem';
 import MessageComposer from '@/components/MessageComposer';
 import BottomNavigation from '@/components/BottomNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 // Sample data
 const SAMPLE_STORIES = [
