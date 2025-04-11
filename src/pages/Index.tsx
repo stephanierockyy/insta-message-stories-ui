@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Camera, Phone } from 'lucide-react';
+import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Phone } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import StoryCircle from '@/components/StoryCircle';
 import MessageItem from '@/components/MessageItem';
@@ -273,7 +272,11 @@ const Index = () => {
           <h1 className="text-xl font-semibold flex-1">Messages</h1>
           <div className="flex items-center space-x-4">
             <button className="text-purple-500">
-              <Camera size={22} />
+              <img 
+                src="/lovable-uploads/19c823ce-69ef-4156-ac20-9171b69bd814.png" 
+                alt="Camera" 
+                className="w-6 h-6"
+              />
             </button>
             <button className="text-black">
               <Search size={22} />

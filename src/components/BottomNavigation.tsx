@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Smile, Mic, Phone, ArrowLeft, Camera } from 'lucide-react';
+import { Search, Smile, Mic, Phone, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -22,7 +22,11 @@ const BottomNavigation: React.FC = () => {
     <div className="fixed bottom-0 left-0 right-0 bg-gray-100 border-t border-gray-200 h-16">
       <div className="h-full flex items-center px-4 justify-between">
         <button className="p-2" aria-label="Attachment">
-          <Camera size={26} className="text-gray-800" />
+          <img 
+            src="/lovable-uploads/19c823ce-69ef-4156-ac20-9171b69bd814.png" 
+            alt="Camera" 
+            className="w-6 h-6"
+          />
         </button>
         <div className="flex-1 mx-4">
           <div className="bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-400">
