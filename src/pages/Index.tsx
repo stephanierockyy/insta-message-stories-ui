@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Plus, Video } from 'lucide-react';
+import { Edit, Plus, Video, Paperclip, Mic, Smile, Phone, Search } from 'lucide-react';
 import StoryCircle from '@/components/StoryCircle';
 import MessageItem from '@/components/MessageItem';
 import MessageComposer from '@/components/MessageComposer';
@@ -147,11 +147,7 @@ const Index = () => {
             <h1 className="text-xl font-semibold flex-1">Messages</h1>
             <div className="flex items-center space-x-4">
               <button className="text-purple-500">
-                <img 
-                  src="/lovable-uploads/49ce606e-ce96-4fdb-86be-64a1b01bc088.png" 
-                  alt="Camera" 
-                  className="w-6 h-6"
-                />
+                <Paperclip size={22} />
               </button>
               <button className="text-purple-500">
                 <Edit size={22} />
@@ -189,12 +185,10 @@ const Index = () => {
             </div>
             <div className="flex items-center space-x-4">
               <button className="text-purple-500">
-                <Video size={20} />
+                <Search size={20} />
               </button>
               <button className="text-purple-500">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
+                <Phone size={20} />
               </button>
             </div>
           </React.Fragment>
