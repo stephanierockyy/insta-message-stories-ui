@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import EmojiPicker from './EmojiPicker';
 import { Textarea } from './ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Popover, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 
 interface MessageComposerProps {
   onSendMessage: (message: string) => void;
@@ -127,14 +127,17 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
                   <Smile size={24} className="text-gray-500" />
                 </button>
               </PopoverTrigger>
-              {isEmojiPickerOpen && (
-                <EmojiPicker 
-                  isOpen={isEmojiPickerOpen} 
+              <PopoverContent 
+                className="w-[320px] p-0 bg-gray-100 border-gray-200" 
+                align="end"
+                side="top"
+                sideOffset={5}
+              >
+                <EmojiPickerContent 
                   onEmojiSelect={handleEmojiSelect}
-                  onClose={() => setIsEmojiPickerOpen(false)}
-                  triggerRef={emojiButtonRef}
+                  showHeader={false} 
                 />
-              )}
+              </PopoverContent>
             </Popover>
           )}
         </div>

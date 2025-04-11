@@ -24,7 +24,7 @@ interface EmojiPickerProps {
   triggerRef?: React.RefObject<HTMLButtonElement>;
 }
 
-const EmojiPickerContent: React.FC<{ 
+export const EmojiPickerContent: React.FC<{ 
   onEmojiSelect: (emoji: string) => void;
   onClose?: () => void;
   showHeader?: boolean;
