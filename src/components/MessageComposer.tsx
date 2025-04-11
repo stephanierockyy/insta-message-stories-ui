@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import EmojiPicker from './EmojiPicker';
 import { Textarea } from './ui/textarea';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Popover, PopoverTrigger } from '@/components/ui/popover';
 
 interface MessageComposerProps {
   onSendMessage: (message: string) => void;
@@ -77,17 +78,42 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
               height: Math.min(60, Math.max(24, message.split('\n').length * 20)) + 'px'
             }}
           />
-          <button 
-            ref={emojiButtonRef}
-            className={cn(
-              "p-1 rounded-full hover:bg-gray-200 ml-1",
-              isEmojiPickerOpen ? "bg-gray-200" : ""
-            )}
-            aria-label="Emoji"
-            onClick={toggleEmojiPicker}
-          >
-            <Smile size={24} className="text-gray-500" />
-          </button>
+          {isMobile ? (
+            <button 
+              ref={emojiButtonRef}
+              className={cn(
+                "p-1 rounded-full hover:bg-gray-200 ml-1",
+                isEmojiPickerOpen ? "bg-gray-200" : ""
+              )}
+              aria-label="Emoji"
+              onClick={toggleEmojiPicker}
+            >
+              <Smile size={24} className="text-gray-500" />
+            </button>
+          ) : (
+            <Popover open={isEmojiPickerOpen} onOpenChange={setIsEmojiPickerOpen}>
+              <PopoverTrigger asChild>
+                <button 
+                  ref={emojiButtonRef}
+                  className={cn(
+                    "p-1 rounded-full hover:bg-gray-200 ml-1",
+                    isEmojiPickerOpen ? "bg-gray-200" : ""
+                  )}
+                  aria-label="Emoji"
+                >
+                  <Smile size={24} className="text-gray-500" />
+                </button>
+              </PopoverTrigger>
+              {isEmojiPickerOpen && (
+                <EmojiPicker 
+                  isOpen={isEmojiPickerOpen} 
+                  onEmojiSelect={handleEmojiSelect}
+                  onClose={() => setIsEmojiPickerOpen(false)}
+                  triggerRef={emojiButtonRef}
+                />
+              )}
+            </Popover>
+          )}
         </div>
         {!message.trim() ? (
           <button 
@@ -107,22 +133,13 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         )}
       </div>
       
-      {isMobile ? (
+      {isMobile && (
         <EmojiPicker 
           isOpen={isEmojiPickerOpen} 
           onEmojiSelect={handleEmojiSelect}
           onClose={() => setIsEmojiPickerOpen(false)}
           triggerRef={emojiButtonRef}
         />
-      ) : (
-        isEmojiPickerOpen && (
-          <EmojiPicker 
-            isOpen={isEmojiPickerOpen} 
-            onEmojiSelect={handleEmojiSelect}
-            onClose={() => setIsEmojiPickerOpen(false)}
-            triggerRef={emojiButtonRef}
-          />
-        )
       )}
     </>
   );

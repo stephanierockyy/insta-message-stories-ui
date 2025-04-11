@@ -97,7 +97,7 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ onEmojiSelect, onClose, isOpe
         className={cn(
           "bg-gray-100 border-t border-gray-200 w-full",
           "flex flex-col animate-fade-in",
-          isMobile ? "h-[280px]" : "h-[250px]"
+          "h-[280px]"
         )}
       >
         <EmojiPickerContent 
@@ -111,11 +111,13 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ onEmojiSelect, onClose, isOpe
   
   // For desktop: compact popover
   return (
-    <Popover open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Popover open={isOpen}>
       <PopoverContent 
         className="w-[320px] p-0 bg-gray-100 border-gray-200" 
-        align="start"
+        align="end"
         side="top"
+        sideOffset={5}
+        onInteractOutside={onClose}
       >
         <EmojiPickerContent 
           onEmojiSelect={onEmojiSelect}
