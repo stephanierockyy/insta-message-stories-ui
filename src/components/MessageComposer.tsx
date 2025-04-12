@@ -87,7 +87,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         </button>
         <div className={cn(
           "flex-1 bg-gray-100 rounded-full mx-2",
-          "flex items-center px-3 py-1"
+          "flex items-center px-3"
         )}>
           <Textarea
             ref={textareaRef}
@@ -96,9 +96,12 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             onChange={handleTextareaChange}
             onKeyPress={handleKeyPress}
             onFocus={handleTextareaFocus}
-            className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-20 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
+            className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-16 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
             style={{ 
-              height: Math.min(40, Math.max(24, message.split('\n').length * 16)) + 'px',
+              height: Math.min(36, Math.max(22, message.split('\n').length * 14)) + 'px',
+              lineHeight: '1.2',
+              paddingTop: '7px',
+              paddingBottom: '7px',
               overflow: 'hidden'
             }}
           />
