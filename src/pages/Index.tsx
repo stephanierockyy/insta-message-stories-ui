@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Phone } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -128,6 +128,15 @@ const Index = () => {
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [messages, setMessages] = useState(CONVERSATION_MESSAGES);
   const isMobile = useIsMobile();
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   const handleSendMessage = (text: string) => {
     const newMessage = {
@@ -154,6 +163,10 @@ const Index = () => {
     }
     setActiveChat(null);
   };
+
+  if (isLoading && isMobile) {
+    return <div className="h-screen bg-white"></div>;
+  }
 
   if (!isMobile) {
     return (
