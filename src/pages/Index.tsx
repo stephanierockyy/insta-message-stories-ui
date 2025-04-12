@@ -396,12 +396,18 @@ const Index = () => {
           </div>
           
           <MessageComposer onSendMessage={handleSendMessage} />
+
+          <div className="h-0">
+            <BottomNavigation />
+          </div>
         </>
       )}
       
-      <div className="h-14">
-        <BottomNavigation />
-      </div>
+      {activeTab === 'messages' && (
+        <div className="h-14">
+          <BottomNavigation />
+        </div>
+      )}
     </div>
   );
 };

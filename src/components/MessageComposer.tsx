@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Mic, Send, Smile, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -18,7 +17,6 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
   const emojiButtonRef = useRef<HTMLButtonElement>(null);
   const isMobile = useIsMobile();
 
-  // Focus the textarea when component mounts or emoji picker closes
   useEffect(() => {
     if (!isEmojiPickerOpen && textareaRef.current) {
       textareaRef.current.focus();
@@ -44,7 +42,6 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
-    // On desktop, close the emoji picker after selection
     if (!isMobile) {
       setIsEmojiPickerOpen(false);
     }
@@ -52,7 +49,6 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
 
   const toggleEmojiPicker = () => {
     setIsEmojiPickerOpen(prev => !prev);
-    // Focus the textarea when emoji picker is closed
     if (isEmojiPickerOpen && textareaRef.current) {
       textareaRef.current.focus();
     }
@@ -60,13 +56,11 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
-    // Close emoji picker on typing for mobile
     if (isMobile && isEmojiPickerOpen) {
       setIsEmojiPickerOpen(false);
     }
   };
 
-  // Handler for when textarea receives focus
   const handleTextareaFocus = () => {
     if (isMobile && isEmojiPickerOpen) {
       setIsEmojiPickerOpen(false);
@@ -78,7 +72,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
       <div className={cn(
         "bg-white border-t border-gray-200 flex items-center",
         isEmojiPickerOpen && isMobile ? "border-b-0" : "",
-        isMobile ? "py-1 px-2" : "p-2"
+        "p-2"
       )}>
         <button 
           className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
@@ -88,8 +82,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         </button>
         <div className={cn(
           "flex-1 bg-gray-100 rounded-full mx-2",
-          "flex items-center px-3",
-          isMobile ? "py-0.5" : "py-1"
+          "flex items-center px-3 py-1"
         )}>
           <Textarea
             ref={textareaRef}
@@ -113,7 +106,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
               aria-label="Emoji"
               onClick={toggleEmojiPicker}
             >
-              <Smile size={22} className="text-gray-500" />
+              <Smile size={24} className="text-gray-500" />
             </button>
           ) : (
             <Popover open={isEmojiPickerOpen} onOpenChange={setIsEmojiPickerOpen}>
