@@ -11,12 +11,6 @@ import { cn } from '@/lib/utils';
 
 const SAMPLE_STORIES = [
   {
-    id: '1',
-    name: 'Your story',
-    avatar: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=50&h=50&fit=crop',
-    isUser: true
-  },
-  {
     id: '2',
     name: 'foodie_adventures',
     avatar: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=50&h=50&fit=crop',
@@ -326,29 +320,13 @@ const Index = () => {
             <div className="flex space-x-4 overflow-x-auto hide-scrollbar pl-4 pr-4">
               {SAMPLE_STORIES.map((story, index) => (
                 <div key={story.id} className="flex-shrink-0">
-                  {index === 0 ? (
-                    <div className="relative">
-                      <StoryCircle 
-                        id={story.id}
-                        name={story.name}
-                        avatar={story.avatar}
-                        seen={story.seen}
-                      />
-                      <button 
-                        className="absolute bottom-5 right-0 bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center border-2 border-white"
-                        aria-label="Add story"
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                  ) : (
-                    <StoryCircle 
-                      id={story.id}
-                      name={story.name}
-                      avatar={story.avatar}
-                      seen={story.seen}
-                    />
-                  )}
+                  <StoryCircle 
+                    id={story.id}
+                    name={story.name}
+                    avatar={story.avatar}
+                    seen={story.seen}
+                    showAddButton={index === 0}
+                  />
                 </div>
               ))}
             </div>
