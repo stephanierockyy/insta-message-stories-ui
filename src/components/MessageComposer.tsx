@@ -76,8 +76,9 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
   return (
     <>
       <div className={cn(
-        "bg-white border-t border-gray-200 p-2 flex items-center",
-        isEmojiPickerOpen && isMobile ? "border-b-0" : ""
+        "bg-white border-t border-gray-200 flex items-center",
+        isEmojiPickerOpen && isMobile ? "border-b-0" : "",
+        isMobile ? "py-1 px-2" : "p-2"
       )}>
         <button 
           className="p-2 rounded-full hover:bg-gray-100 text-gray-500"
@@ -87,7 +88,8 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
         </button>
         <div className={cn(
           "flex-1 bg-gray-100 rounded-full mx-2",
-          "flex items-center px-3 py-1"
+          "flex items-center px-3",
+          isMobile ? "py-0.5" : "py-1"
         )}>
           <Textarea
             ref={textareaRef}
@@ -111,7 +113,7 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
               aria-label="Emoji"
               onClick={toggleEmojiPicker}
             >
-              <Smile size={24} className="text-gray-500" />
+              <Smile size={22} className="text-gray-500" />
             </button>
           ) : (
             <Popover open={isEmojiPickerOpen} onOpenChange={setIsEmojiPickerOpen}>
