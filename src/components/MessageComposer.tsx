@@ -96,9 +96,10 @@ const MessageComposer: React.FC<MessageComposerProps> = ({ onSendMessage }) => {
             onChange={handleTextareaChange}
             onKeyPress={handleKeyPress}
             onFocus={handleTextareaFocus}
-            className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-24 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
+            className="flex-1 bg-transparent border-0 outline-none text-sm py-1 min-h-0 max-h-20 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-500"
             style={{ 
-              height: Math.min(60, Math.max(24, message.split('\n').length * 20)) + 'px'
+              height: Math.min(40, Math.max(24, message.split('\n').length * 16)) + 'px',
+              overflow: 'hidden'
             }}
           />
           {isMobile ? (
