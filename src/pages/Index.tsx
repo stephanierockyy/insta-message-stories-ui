@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit, Plus, Video, Smile, Mic, Search, ArrowLeft, Phone } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
@@ -128,6 +128,11 @@ const Index = () => {
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [messages, setMessages] = useState(CONVERSATION_MESSAGES);
   const isMobile = useIsMobile();
+  const [isInitialized, setIsInitialized] = useState(false);
+  
+  useEffect(() => {
+    setIsInitialized(true);
+  }, []);
   
   const handleSendMessage = (text: string) => {
     const newMessage = {
@@ -276,62 +281,25 @@ const Index = () => {
   }
 
   return (
-    <div className="mobile-container bg-white flex flex-col">
+    <div className="mobile-container bg-white flex flex-col h-screen">
       {activeTab === 'messages' ? (
-        <header className="bg-white p-4 flex items-center">
-          <h1 className="text-xl font-semibold flex-1">Messages</h1>
-          <div className="flex items-center space-x-4">
-            <button className="text-purple-500">
-              <img 
-                src="/lovable-uploads/19c823ce-69ef-4156-ac20-9171b69bd814.png" 
-                alt="Camera" 
-                className="w-6 h-6"
-              />
-            </button>
-            <button className="text-black">
-              <Search size={22} />
-            </button>
-          </div>
-        </header>
-      ) : (
-        <header className="bg-white h-16 flex items-center px-4 shadow-sm">
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center">
-              <button 
-                onClick={handleBackToMessages}
-                className="mr-3"
-                aria-label="Back"
-              >
-                <ArrowLeft size={24} className="text-gray-800" />
-              </button>
-              <Avatar className="h-10 w-10 bg-purple-400">
-                <AvatarImage
-                  src={activeChat ? SAMPLE_MESSAGES.find(msg => msg.id === activeChat)?.avatar : undefined}
-                  alt="Profile"
+        <>
+          <header className="bg-white p-4 flex items-center">
+            <h1 className="text-xl font-semibold flex-1">Messages</h1>
+            <div className="flex items-center space-x-4">
+              <button className="text-purple-500">
+                <img 
+                  src="/lovable-uploads/19c823ce-69ef-4156-ac20-9171b69bd814.png" 
+                  alt="Camera" 
+                  className="w-6 h-6"
                 />
-                <AvatarFallback className="text-white font-semibold">H</AvatarFallback>
-              </Avatar>
-              <div className="ml-3">
-                <h2 className="text-base font-medium">
-                  {activeChat ? SAMPLE_MESSAGES.find(msg => msg.id === activeChat)?.name : 'hey'}
-                </h2>
-                <p className="text-xs text-gray-500">{activeChat ? 'Active now' : '1 member'}</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-6">
-              <button className="text-gray-800" aria-label="Search">
-                <Search size={24} />
               </button>
-              <button className="text-gray-800" aria-label="Call">
-                <Phone size={24} />
+              <button className="text-black">
+                <Search size={22} />
               </button>
             </div>
-          </div>
-        </header>
-      )}
-      
-      {activeTab === 'messages' ? (
-        <React.Fragment>
+          </header>
+        
           <div className="py-3 px-1 border-b border-gray-100">
             <div className="flex space-x-4 overflow-x-auto hide-scrollbar pl-4 pr-4">
               {SAMPLE_STORIES.map((story) => (
@@ -376,9 +344,44 @@ const Index = () => {
               </button>
             ))}
           </div>
-        </React.Fragment>
+        </>
       ) : (
-        <React.Fragment>
+        <>
+          <header className="bg-white h-16 flex items-center px-4 shadow-sm">
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
+                <button 
+                  onClick={handleBackToMessages}
+                  className="mr-3"
+                  aria-label="Back"
+                >
+                  <ArrowLeft size={24} className="text-gray-800" />
+                </button>
+                <Avatar className="h-10 w-10 bg-purple-400">
+                  <AvatarImage
+                    src={activeChat ? SAMPLE_MESSAGES.find(msg => msg.id === activeChat)?.avatar : undefined}
+                    alt="Profile"
+                  />
+                  <AvatarFallback className="text-white font-semibold">H</AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
+                  <h2 className="text-base font-medium">
+                    {activeChat ? SAMPLE_MESSAGES.find(msg => msg.id === activeChat)?.name : 'hey'}
+                  </h2>
+                  <p className="text-xs text-gray-500">{activeChat ? 'Active now' : '1 member'}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-6">
+                <button className="text-gray-800" aria-label="Search">
+                  <Search size={24} />
+                </button>
+                <button className="text-gray-800" aria-label="Call">
+                  <Phone size={24} />
+                </button>
+              </div>
+            </div>
+          </header>
+
           <div className="flex-1 overflow-y-auto p-4 pt-16">
             {messages.map((message) => (
               <MessageItem
@@ -393,7 +396,7 @@ const Index = () => {
           </div>
           
           <MessageComposer onSendMessage={handleSendMessage} />
-        </React.Fragment>
+        </>
       )}
       
       <div className="h-14">
