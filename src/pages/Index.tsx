@@ -31,7 +31,7 @@ const SAMPLE_STORIES = [
   {
     id: '5',
     name: 'travel_junkie',
-    avatar: 'https://images.unsplash.com/photo-1501286353178-1ec881214838?w=50&h=50&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1501286353178-1ec871214838?w=50&h=50&fit=crop',
     seen: true
   }
 ];
@@ -54,19 +54,35 @@ const SAMPLE_MESSAGES = [
     unread: false
   },
   {
-    id: '3',
-    name: 'Emily Davis',
-    avatar: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=50&h=50&fit=crop',
-    lastMessage: 'Let me know what you think about the new design',
-    time: '2h ago',
-    unread: false
-  },
-  {
     id: '4',
     name: 'James Wilson',
     avatar: 'https://images.unsplash.com/photo-1501286353178-1ec881214838?w=50&h=50&fit=crop',
     lastMessage: 'Check out these vacation photos!',
     time: '1d ago',
+    unread: false
+  },
+  {
+    id: '6',
+    name: 'Alex Thompson',
+    avatar: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=50&h=50&fit=crop',
+    lastMessage: 'Are we still meeting tomorrow?',
+    time: '3h ago',
+    unread: true
+  },
+  {
+    id: '7',
+    name: 'Taylor Kim',
+    avatar: 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=50&h=50&fit=crop',
+    lastMessage: 'I found that book you were looking for!',
+    time: '5h ago',
+    unread: false
+  },
+  {
+    id: '8',
+    name: 'Jordan Lee',
+    avatar: 'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=50&h=50&fit=crop',
+    lastMessage: 'Thanks for the recommendation 👍',
+    time: '2d ago',
     unread: false
   }
 ];
@@ -318,14 +334,14 @@ const Index = () => {
         <React.Fragment>
           <div className="py-3 px-1 border-b border-gray-100">
             <div className="flex space-x-4 overflow-x-auto hide-scrollbar pl-4 pr-4">
-              {SAMPLE_STORIES.map((story, index) => (
+              {SAMPLE_STORIES.map((story) => (
                 <div key={story.id} className="flex-shrink-0">
                   <StoryCircle 
                     id={story.id}
                     name={story.name}
                     avatar={story.avatar}
                     seen={story.seen}
-                    showAddButton={index === 0}
+                    showAddButton={true}
                   />
                 </div>
               ))}
