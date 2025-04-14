@@ -1,8 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Edit } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Chat } from '../types';
+import SearchBox from './SearchBox';
+import SearchResults from './SearchResults';
 
 interface DesktopMessagesSectionProps {
   messages: Chat[];
@@ -15,6 +17,28 @@ const DesktopMessagesSection: React.FC<DesktopMessagesSectionProps> = ({
   activeChat,
   onChatClick
 }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Chat[]>([]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    // Filter messages based on search query
+    const results = messages.filter(chat => 
+      chat.name.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    setSearchResults(results);
+  };
+
+  // Show all messages if not searching
+  const displayedMessages = searchQuery.trim() === '' ? messages : messages;
+
   return (
     <div className="w-1/3 border-r border-gray-200 bg-white flex flex-col h-full overflow-hidden">
       <header className="bg-white border-b border-gray-200 p-4 flex items-center">
@@ -26,8 +50,18 @@ const DesktopMessagesSection: React.FC<DesktopMessagesSectionProps> = ({
         </div>
       </header>
 
+      <SearchBox onSearch={handleSearch} />
+      
+      {searchQuery.trim() !== '' && (
+        <SearchResults 
+          results={searchResults} 
+          query={searchQuery} 
+          onChatClick={onChatClick} 
+        />
+      )}
+
       <div className="flex-1 overflow-y-auto">
-        {messages.map((chat) => (
+        {displayedMessages.map((chat) => (
           <button
             key={chat.id}
             className={cn(

@@ -22,3 +22,10 @@ export interface Story {
   avatar: string;
   seen: boolean;
 }
+
+export interface SearchResult {
+  id: string;
+  name: string;
+  avatar: string;
+  type: 'chat' | 'contact';
+}
