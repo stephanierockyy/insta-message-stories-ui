@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, Smile, Frown, X, Search, Hand } from 'lucide-react';
+import { Clock, Smile, Frown, X, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -91,7 +91,7 @@ export const EmojiPickerContent: React.FC<{
     );
   }
   
-  // New desktop design that matches the image
+  // Updated desktop design with non-functional search div and removed tone button
   const filteredEmojis = searchQuery 
     ? EMOJI_CATEGORIES["Smileys & Emotion"].filter(emoji => 
         emoji.includes(searchQuery))
@@ -99,18 +99,14 @@ export const EmojiPickerContent: React.FC<{
     
   return (
     <div className="p-4 w-full max-h-[400px] bg-white rounded-lg">
-      {/* Search bar */}
+      {/* Non-functional search div that looks like a search box */}
       <div className="relative mb-4">
         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
           <Search className="h-4 w-4 text-gray-400" />
         </div>
-        <input
-          type="text"
-          placeholder="Search"
-          className="pl-10 pr-3 py-2 w-full bg-gray-100 rounded-full text-sm focus:outline-none"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div className="pl-10 pr-3 py-2 w-full bg-gray-100 rounded-full text-sm text-gray-400">
+          Search
+        </div>
       </div>
       
       {/* Category title */}
@@ -132,13 +128,7 @@ export const EmojiPickerContent: React.FC<{
         ))}
       </div>
       
-      {/* Tone selector button */}
-      <div className="flex justify-end mt-4">
-        <button className="flex items-center px-3 py-1.5 bg-gray-100 rounded-full text-sm">
-          <Hand size={16} className="text-yellow-500 mr-1.5" />
-          <span>Tone</span>
-        </button>
-      </div>
+      {/* Tone button removed */}
     </div>
   );
 };
