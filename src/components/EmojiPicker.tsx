@@ -3,8 +3,9 @@ import { Clock, Smile, Frown, X, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
-// Define emoji categories and emojis
+// Define emoji categories and emojis - expanded with more emojis
 const EMOJI_CATEGORIES = {
   "Smileys & Emotion": [
     '😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', 
@@ -15,6 +16,26 @@ const EMOJI_CATEGORIES = {
     '😬', '🫨', '😮‍💨', '😪', '😴', '😌', '😔', '🤤', '😪',
     '😭', '🤯', '🫠', '😟', '😢', '🤧', '🤮', '🤢', '🫡',
     '😡', '🤬', '💀', '😵', '😵‍💫', '🤯', '🧐', '🤠', '🥸'
+  ],
+  "Animals & Nature": [
+    '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐻‍❄️', 
+    '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', 
+    '🐦', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', 
+    '🐝', '🪱', '🐛', '🦋', '🐌', '🐞', '🐜', '🪰', '🪲', 
+    '🪳', '🦟', '🦗', '🕷️', '🕸️', '🦂', '🐢', '🐍', '🦎', 
+    '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', 
+    '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '🐆', '🦓', 
+    '🦍', '🦧', '🦣', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒'
+  ],
+  "Food & Drink": [
+    '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐',
+    '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆',
+    '🥑', '🥦', '🥬', '🥒', '🌶️', '🫑', '🌽', '🥕', '🫒',
+    '🧄', '🧅', '🥔', '🍠', '🥐', '🥯', '🍞', '🥖', '🥨',
+    '🧀', '🥚', '🍳', '🧈', '🥞', '🧇', '🥓', '🥩', '🍗',
+    '🍖', '🦴', '🌭', '🍔', '🍟', '🍕', '🫓', '🥪', '🥙',
+    '🧆', '🌮', '🌯', '🫔', '🥗', '🥘', '🫕', '🥫', '🍝',
+    '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🦪', '🍤', '🍙'
   ]
 };
 
@@ -32,6 +53,7 @@ export const EmojiPickerContent: React.FC<{
   isMobileView?: boolean;
 }> = ({ onEmojiSelect, onClose, showHeader = true, isMobileView = false }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<keyof typeof EMOJI_CATEGORIES>("Smileys & Emotion");
   
   // Keep mobile design the same
   if (isMobileView) {
@@ -91,14 +113,9 @@ export const EmojiPickerContent: React.FC<{
     );
   }
   
-  // Updated desktop design with non-functional search div and removed tone button
-  const filteredEmojis = searchQuery 
-    ? EMOJI_CATEGORIES["Smileys & Emotion"].filter(emoji => 
-        emoji.includes(searchQuery))
-    : EMOJI_CATEGORIES["Smileys & Emotion"];
-    
+  // Updated desktop design with scrollable emoji area
   return (
-    <div className="p-4 w-full max-h-[400px] bg-white rounded-lg">
+    <div className="p-4 w-full bg-white rounded-lg">
       {/* Non-functional search div that looks like a search box */}
       <div className="relative mb-4">
         <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -109,26 +126,41 @@ export const EmojiPickerContent: React.FC<{
         </div>
       </div>
       
-      {/* Category title */}
-      <div className="flex justify-between items-center mb-2">
-        <h3 className="font-medium text-base">Smileys & Emotion</h3>
-        <div className="h-6 w-1 bg-gray-200 rounded-full"></div>
-      </div>
-      
-      {/* Emoji grid */}
-      <div className="grid grid-cols-9 gap-1">
-        {filteredEmojis.map((emoji, i) => (
+      {/* Category tabs */}
+      <div className="flex mb-3 space-x-2 overflow-x-auto hide-scrollbar">
+        {Object.keys(EMOJI_CATEGORIES).map((category) => (
           <button 
-            key={i}
-            className="text-2xl hover:bg-gray-100 rounded p-1 flex items-center justify-center h-9 w-9"
-            onClick={() => onEmojiSelect(emoji)}
+            key={category}
+            className={cn(
+              "px-3 py-1.5 text-sm whitespace-nowrap rounded-md",
+              activeCategory === category ? "bg-gray-100 font-medium" : "text-gray-500"
+            )}
+            onClick={() => setActiveCategory(category as keyof typeof EMOJI_CATEGORIES)}
           >
-            {emoji}
+            {category}
           </button>
         ))}
       </div>
       
-      {/* Tone button removed */}
+      {/* Category title */}
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="font-medium text-base">{activeCategory}</h3>
+      </div>
+      
+      {/* Emoji grid with scrolling container */}
+      <ScrollArea className="h-[240px]">
+        <div className="grid grid-cols-9 gap-1 pr-2">
+          {EMOJI_CATEGORIES[activeCategory].map((emoji, i) => (
+            <button 
+              key={i}
+              className="text-2xl hover:bg-gray-100 rounded p-1 flex items-center justify-center h-9 w-9"
+              onClick={() => onEmojiSelect(emoji)}
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+      </ScrollArea>
     </div>
   );
 };
